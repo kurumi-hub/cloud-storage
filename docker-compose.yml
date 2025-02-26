@@ -19,7 +19,7 @@ services:
   backend:
     build:
       context: ./backend   # Thư mục chứa mã nguồn backend (thêm thư mục backend vào dự án của bạn)
-      dockerfile: Dockerfile # Đảm bảo bạn có Dockerfile trong thư mục backend
+      dockerfile: DockerfileB # Đảm bảo bạn có Dockerfile trong thư mục backend
     container_name: backend_api
     environment:
       - DB_HOST=db         # Kết nối tới DB PostgreSQL
@@ -47,7 +47,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: DockerfileF
     container_name: web_frontend
     ports:
       - "3000:3000"

@@ -1,0 +1,20 @@
+# Sử dụng Node.js làm hình ảnh cơ sở
+FROM node:16
+
+# Đặt thư mục làm việc bên trong container
+WORKDIR /app
+
+# Sao chép package.json và yarn.lock hoặc package-lock.json
+COPY package.json yarn.lock ./
+
+# Cài đặt các dependencies
+RUN yarn install
+
+# Sao chép mã nguồn vào container
+COPY . .
+
+# Mở cổng mà ứng dụng sẽ chạy
+EXPOSE 5000
+
+# Khởi chạy ứng dụng backend (ví dụ nếu dùng Express)
+CMD ["yarn", "start"]

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Header, Icon, Modal, Button, Message } from 'semantic-ui-react'
-import config from '../../config'
+import config from '../../api/config'
 
 
 const GoogleAuth = ({ setIdToken, setProfile }) => {

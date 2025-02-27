@@ -1,5 +1,5 @@
 import axiosLib from 'axios'
-import config from '../config'
+import config from './config'
 
 const axios = axiosLib.create({
   baseURL: config.APIEndpoint

@@ -5,7 +5,7 @@ FROM node:16
 WORKDIR /app
 
 # Sao chép package.json và yarn.lock để cài đặt dependencies
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock
 
 # Cài đặt các dependencies
 RUN yarn install

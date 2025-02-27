@@ -1,0 +1,23 @@
+{
+    "name": "backend-api",
+    "version": "1.0.0",
+    "description": "Backend API for managing users, expenses, and products",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js",
+      "dev": "nodemon app.js" 
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "pg": "^8.7.1",
+      "sequelize": "^6.6.5",
+      "cors": "^2.8.5",
+      "nodemon": "^2.0.15"
+    },
+    "devDependencies": {
+      "dotenv": "^10.0.0"
+    },
+    "author": "Your Name",
+    "license": "MIT"
+  }
+  

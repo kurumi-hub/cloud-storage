@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import FileCard from '../FileCard/FileCard'
 import { formatBytes, formatDatetime } from '../../util/fileutil'
 import api from '../../api/storage'
-import config from '../../config'
+import config from '../../api/config'
 
 const FileExplorer = ({ idToken, profile, setExplorerPath, doRefresh, didRefresh }) => {
   const [state, setState] = useState({

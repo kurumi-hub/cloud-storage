@@ -5,7 +5,7 @@ FROM node:16
 WORKDIR /app
 
 # Sao chép package.json và yarn.lock hoặc package-lock.json
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock
 
 # Cài đặt các dependencies
 RUN yarn install
@@ -13,8 +13,8 @@ RUN yarn install
 # Sao chép mã nguồn vào container
 COPY . .
 
-# Mở cổng mà ứng dụng sẽ chạy
+# Mở cổng cho API
 EXPOSE 5000
 
-# Khởi chạy ứng dụng backend (ví dụ nếu dùng Express)
-CMD ["yarn", "start"]
+# Khởi chạy ứng dụng Node.js
+CMD ["node", "app.js"]

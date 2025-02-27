@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Icon, Menu, Sidebar, Segment, Image } from 'semantic-ui-react'
-import config from '../../config'
+import config from '../../api/config'
 
 export default ({ profile, openFileUpload, openFolderCreator, openSettings }) => {
 

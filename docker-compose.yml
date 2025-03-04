@@ -43,13 +43,13 @@ services:
     image: minio/minio
     container_name: minio
     environment:
-      - MINIO_ACCESS_KEY=your-access-key
-      - MINIO_SECRET_KEY=your-secret-key
+      - MINIO_ROOT_USER=your-access-key
+      - MINIO_ROOT_PASSWORD=your-secret-key
     command: server /data
     volumes:
       - minio_data:/data
     ports:
-      - "9000:9000"
+      - "9001:9000"
     networks:
       - app_network
 

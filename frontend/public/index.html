@@ -1,23 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="CDN file manager"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload and Download File</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      margin: 10px 0;
+    }
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
 
-    <script src="https://apis.google.com/js/api.js"></script>
+  <h1>Upload File</h1>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" required />
+    <button type="submit">Upload</button>
+  </form>
 
-    <title>File Manager</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-  </body>
+  <h1>Download File</h1>
+  <input type="text" id="filename" placeholder="Enter filename to download" />
+  <button id="downloadBtn">Download</button>
+
+  <h1>Available Files</h1>
+  <ul id="fileList"></ul>
+
+  <script>
+    // Handle file upload
+    const uploadForm = document.getElementById('uploadForm');
+    uploadForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(uploadForm);
+
+      try {
+        const response = await fetch('http://localhost:5000/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          alert('File uploaded successfully');
+          loadFiles();  // Reload the list of files
+        } else {
+          alert('Error uploading file');
+        }
+      } catch (error) {
+        console.error('Error during upload:', error);
+        alert('Error uploading file. Please try again.');
+      }
+    });
+
+    // Load the list of available files
+    async function loadFiles() {
+      try {
+        const response = await fetch('http://localhost:5000/files');
+        if (!response.ok) throw new Error('Failed to fetch file list');
+        const files = await response.json();
+
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = ''; // Clear current list
+        files.forEach(file => {
+          const li = document.createElement('li');
+          li.textContent = file;
+          fileList.appendChild(li);
+        });
+      } catch (error) {
+        console.error('Error loading files:', error);
+        alert('Failed to load files. Please try again.');
+      }
+    }
+
+    // Handle file download
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const filename = document.getElementById('filename').value;
+      if (filename) {
+        window.location.href = `http://localhost:5000/download/${filename}`;
+      } else {
+        alert('Please enter a filename');
+      }
+    });
+
+    // Load the list of files when the page loads
+    loadFiles();
+  </script>
+</body>
 </html>

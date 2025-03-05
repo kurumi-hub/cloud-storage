@@ -1,63 +1,18 @@
-# Backend API
+version: '3'
+
 services:
-  backend:
-    build:
-      context: ./backend   # Thư mục chứa mã nguồn backend (thêm thư mục backend vào dự án của bạn)
-      dockerfile: DockerfileB # Đảm bảo bạn có Dockerfile trong thư mục backend
-    container_name: backend_api
-    environment:
-      - DB_HOST=db         # Kết nối tới DB PostgreSQL
-    ports:
-      - "5000:5000"        # Cổng của API (nếu dùng Flask hoặc Node.js, bạn có thể chọn cổng khác)
-    networks:
-      - app_network
-    depends_on:
-      - db
-
-  # PostgreSQL Database
-  db:
-    image: postgres:latest
-    container_name: postgres_db
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: your_db
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - app_network
-
-  # Web Frontend
   frontend:
     build:
-      context: ./frontend
-      dockerfile: DockerfileF
-    container_name: web_frontend
+      context: .
+      dockerfile: frontend/Dockerfile
     ports:
-      - "3000:3000"
-    networks:
-      - app_network
+      - "80:80"
+    depends_on:
+      - backend
 
-  # Cloud Storage (MinIO)
-  cloud_storage:
-    image: minio/minio
-    container_name: minio
-    environment:
-      - MINIO_ROOT_USER=your-access-key
-      - MINIO_ROOT_PASSWORD=your-secret-key
-    command: server /data
-    volumes:
-      - minio_data:/data
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     ports:
-      - "9001:9000"
-    networks:
-      - app_network
-
-  # Volumes for persistent data storage
-volumes:
-  db_data:
-  minio_data:
-
-networks:
-  app_network:
-    driver: bridge
+      - "5000:5000"
